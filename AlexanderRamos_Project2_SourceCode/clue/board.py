@@ -22,58 +22,32 @@ class Board:
             self.board.append([])
             for col in range(COLS):
                 if (row<=4 and col <=5): #first check if region is part of a room
-                    if(row==4 and col==4): # check if that room is also the entrance
-                        self.board[row].append([Room(id="Kitchen",row=row,col=col,entrance=True,passage=None),0])
-                    else:
-                        self.board[row].append([Room(id="Kitchen",row=row,col=col,entrance=False,passage=None),0])
+                    self.board[row].append([Room(id="Kitchen",row=row,col=col,entrance=False,passage="Study"),0])
                 elif (row<=5 and (8<=col<=14)):
-                    if(row==4 and col ==8) or (row==5 and col ==9) or (row==4 and col ==14)or (row==5 and col ==13):
-                        self.board[row].append([Room(id="Ballroom",row=row,col=col,entrance=True,passage=None),0])
-                    else:
-                        self.board[row].append([Room(id="Ballroom",row=row,col=col,entrance=False,passage=None),0])
+                    self.board[row].append([Room(id="Ballroom",row=row,col=col,entrance=False,passage=None),0])
                 elif (row<=3 and 17<=col):
-                    if(row==2 and col==17):
-                        self.board[row].append([Room(id="Conservatory",row=row,col=col,entrance=True,passage=None),0])
-                    else:
-                        self.board[row].append([Room(id="Conservatory",row=row,col=col,entrance=False,passage=None),0])
+                    self.board[row].append([Room(id="Conservatory",row=row,col=col,entrance=False,passage="Lounge"),0])
                 elif (7<=row<=13 and col<=7):
-                    if(row==10 and col==7) or (row==13 and col==4):
-                        self.board[row].append([Room(id="Dining Room",row=row,col=col,entrance=True,passage=None),0])
-                    else:
-                        self.board[row].append([Room(id="Dining Room",row=row,col=col,entrance=False,passage=None),0])
+                    self.board[row].append([Room(id="Dining Room",row=row,col=col,entrance=False,passage=None),0])
                 elif (8<=row<=14 and 10<=col<=14):
-                    if(row==8 and col ==12) or (row==11 and col ==10) or (row==11 and col ==14)or (row==14 and col ==12):
-                        self.board[row].append([Room(id="Pool",row=row,col=col,entrance=True,passage=None),0])
-                    else:
-                        self.board[row].append([Room(id="Pool",row=row,col=col,entrance=False,passage=None),0])
+                    self.board[row].append([Room(id="Pool",row=row,col=col,entrance=False,passage=None),0])
                 elif (6<=row<=10 and 17<=col):
-                    if(row==6 and col==20) or (row==7 and col==17):
-                        self.board[row].append([Room(id="Billiard Room",row=row,col=col,entrance=True,passage=None),0])
-                    else:
-                        self.board[row].append([Room(id="Billiard Room",row=row,col=col,entrance=False,passage=None),0])
+                    self.board[row].append([Room(id="Billiard Room",row=row,col=col,entrance=False,passage=None),0])
                 elif (12<=row<=16 and 16<=col):
-                    if(row==14 and col==16) or (row==12 and col==19):
-                        self.board[row].append([Room(id="Library",row=row,col=col,entrance=True,passage=None),0])
-                    else:
-                        self.board[row].append([Room(id="Library",row=row,col=col,entrance=False,passage=None),0])
+                    self.board[row].append([Room(id="Library",row=row,col=col,entrance=False,passage=None),0])
                 elif (17<=row and col<=6):
-                    if(row==17 and col==5):
-                        self.board[row].append([Room(id="Lounge",row=row,col=col,entrance=True,passage=None),0])
-                    else:
-                        self.board[row].append([Room(id="Lounge",row=row,col=col,entrance=False,passage=None),0])
+                    self.board[row].append([Room(id="Lounge",row=row,col=col,entrance=False,passage="Conservatory"),0])
                 elif (16<=row and 9<=col<=14):
-                    if(row==16 and 11<col<=12) or (row==19 and col==14):
-                        self.board[row].append([Room(id="Hall",row=row,col=col,entrance=True,passage=None),0])
-                    else:
-                        self.board[row].append([Room(id="Hall",row=row,col=col,entrance=False,passage=None),0])
+                    self.board[row].append([Room(id="Hall",row=row,col=col,entrance=False,passage=None),0])
                 elif (19<=row and 16<=col):
-                    if(row==19 and col==17):
-                        self.board[row].append([Room(id="Study",row=row,col=col,entrance=True,passage=None),0])
-                    else:
-                        self.board[row].append([Room(id="Study",row=row,col=col,entrance=False,passage=None),0])
+                    self.board[row].append([Room(id="Study",row=row,col=col,entrance=False,passage="Kitchen"),0])
                 else:
                     #non room space has 0 in room
                     self.board[row].append([0,0])
+
+        for v in ENTRANCES.values():#add entrances
+            for coord in v:
+                self.board[coord[0]][coord[1]][0].entrance=True
 
         for player in players: #add players onto board
             self.board[player.row][player.col][1]=player
@@ -90,6 +64,14 @@ class Board:
                     player.draw(win) #draw players over grid
 
         for locationKey in LOCATIONS: #dray room labels
+            if locationKey == "Kitchen":
+                win.blit(SUBFONT.render("Passage to Study",True,WHITE), (LOCATIONS[locationKey][1]*SQUARE_SIZE, (LOCATIONS[locationKey][0]+1)*SQUARE_SIZE, SQUARE_SIZE,SQUARE_SIZE))
+            if locationKey =="Study":
+                win.blit(SUBFONT.render("Passage to Kitchen",True,WHITE), (LOCATIONS[locationKey][1]*SQUARE_SIZE, (LOCATIONS[locationKey][0]+1)*SQUARE_SIZE, SQUARE_SIZE,SQUARE_SIZE))
+            if locationKey =="Lounge":
+                win.blit(SUBFONT.render("Passage to Conservatory",True,WHITE), (LOCATIONS[locationKey][1]*SQUARE_SIZE, (LOCATIONS[locationKey][0]+1)*SQUARE_SIZE, SQUARE_SIZE,SQUARE_SIZE))
+            if locationKey =="Conservatory":
+                win.blit(SUBFONT.render("Passage to Lounge",True,WHITE), (LOCATIONS[locationKey][1]*SQUARE_SIZE, (LOCATIONS[locationKey][0]+1)*SQUARE_SIZE, SQUARE_SIZE,SQUARE_SIZE))
             win.blit(FONT.render(locationKey,True,WHITE), (LOCATIONS[locationKey][1]*SQUARE_SIZE, LOCATIONS[locationKey][0]*SQUARE_SIZE, SQUARE_SIZE,SQUARE_SIZE))
      
 
@@ -103,3 +85,6 @@ class Board:
             return self.board[row][col]
         else:
             return None
+        
+
+

@@ -7,7 +7,7 @@ from clue.room import Room
 from clue.card import Card
 from clue.notes import Notes
 from clue.player import Player
-
+from queue import Queue
 
 
 #game refresh speed setup
@@ -29,7 +29,49 @@ def wait():
             if event.type==pygame.KEYDOWN:
                 if event.key==pygame.K_RETURN:
                     return True
-                
+            
+
+def checkMoveValid(current,target):
+    if(target==None): #can't walk off map
+        return False
+    elif(target[1]!=0): #can't walk over players
+            return False
+    elif(current[0]!=0): #you are in a room
+        inEntrance=current[0].entrance
+        if (target[0]==0 and not inEntrance): #can't walk through walls out
+            return False
+    else:#you are not in a room
+        if(target[0]!=0 and not target[0].entrance): #can't walk through walls in
+            return False
+    return True
+
+def pathing(start,end,board):
+    q = Queue()
+    visited={start}
+    q.put((start,[]))
+    while(not q.empty()):
+        n=q.get()
+        row=n[0][0]
+        col=n[0][1]
+        
+        if (n[0]==end):
+            return(n[1])
+
+        else:
+            if checkMoveValid(board.getSpace(row,col),board.getSpace(row+1,col)) and not ((row+1,col) in visited):
+                q.put(((row+1,col),n[1]+[pygame.K_DOWN]))
+                visited.add((row+1,col))
+            if checkMoveValid(board.getSpace(row,col),board.getSpace(row-1,col)) and not ((row-1,col) in visited):
+                q.put(((row-1,col),n[1]+[pygame.K_UP]))
+                visited.add((row-1,col))
+            if checkMoveValid(board.getSpace(row,col),board.getSpace(row,col+1)) and not ((row,col+1) in visited):
+                q.put(((row,col+1),n[1]+[pygame.K_RIGHT]))
+                visited.add((row+1,col))
+            if checkMoveValid(board.getSpace(row,col),board.getSpace(row,col-1)) and not ((row,col-1) in visited):
+                q.put(((row,col-1),n[1]+[pygame.K_LEFT]))
+                visited.add((row,col-1))
+    return([])
+
 def findOpenSpace(board,row,col):
     #used for teleporting to rooms
     #given a row and col
@@ -47,13 +89,13 @@ def findOpenSpace(board,row,col):
             else:
                 shiftC=shiftC+1
 
-def suggestion(room,WIN,board):
+
+def suggestion(room):
     #gather suggestion from consol
     #making a suggestion in pool will trigger the win_lose flag for final suggestion
     room=room
     win_lose=False
     if room=="Pool":
-        win_lose=True
         room=input("What do you think? "+str(ROOM)+ ": ")
         while room not in ROOM:
             suspect=input("Invalid choice. What do you think? "+str(ROOM)+ ": ")
@@ -65,8 +107,16 @@ def suggestion(room,WIN,board):
         while weapon not in WEP:
             weapon=input("Invalid choice. What weapon do you suspect? "+str(WEP)+ ": ")
 
-    return [room,suspect,weapon,win_lose]
+    return [room,suspect,weapon]
 
+def refute(guess,player):
+    ref=input(player.id +" Please refute: "+ str(guess)+" or type 'none' if you can't: ")
+    while not((ref in guess) or ref=="none"):
+        ref=input("Invalid choice. Please refute: "+ str(guess)+" or type 'none' if you can't: ")
+    if(ref=="none"):
+        return None
+    else:
+        return ref
 
 def main():
     #all the setup stuff
@@ -159,6 +209,8 @@ def main():
             turnCount=turnCount+1
             turn=(len(players)+turnCount)%len(players)
             currentPlayer=players[turn]
+            if currentPlayer.dead:
+                continue
             #prompt to let new player roll
             pygame.display.set_caption("PLAYER "+str(turn+1)+": "+str(players[turn].id)+"'s TURN. PRESS ENTER TO ROLL THE DICE AND CONTINUE")
             run=wait()
@@ -166,109 +218,158 @@ def main():
             continue
             
         
-        pygame.display.set_caption("PLAYER "+str(turn+1)+": "+str(currentPlayer.id)+" YOU HAVE **" +str(dice)+ "** SPACES LEFT (Arrow Keys to Move) ('H' to View hand)")
+        pygame.display.set_caption("PLAYER "+str(turn+1)+": "+str(currentPlayer.id)+" YOU HAVE **" +str(dice)+ "** SPACES LEFT (Arrow Keys to Movem, 'SPACE' to use passage) ('TAB' to View hand)")
         currentSpace=board.getSpace(currentPlayer.row,currentPlayer.col)
         #currentSpace[0] is Room or 0 if non room space
         #currentSpace[1] is Player or 0 if non player space
         if(currentSpace[0]!=0):
             inRoom=True
-            inEntance=currentSpace[0].entrance
         else:
             inRoom=False
-            inEntance=False
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+
+        if currentPlayer.ai:
+            if inRoom:
+                r=currentSpace[0].id
+            else:
+                r=0
+            t=currentPlayer.pickRoom(r)
+            path=pathing((currentPlayer.row,currentPlayer.col),t,board)
+
+        else:
+            path=[]
+        for event in pygame.event.get()+path:
+            if(dice==0):
+                break   
+            if(currentPlayer.ai):
+                typecheck=pygame.KEYDOWN
+            else:
+                typecheck=event.type
+            if typecheck == pygame.QUIT:
                 #end game if you click exit
                 run=False
-            if event.type == pygame.KEYDOWN:
+            if typecheck == pygame.KEYDOWN:
                 #movement controled by Arrow keys
-                if event.key==pygame.K_h:
+                
+                if(currentPlayer.ai):
+
+                    keycheck=path.pop(0)
+                else:
+                    keycheck=event.key
+                if keycheck==pygame.K_SPACE:
+                    if(inRoom and currentSpace[0].passage!=None): #using passages
+                        moveTo=findOpenSpace(board,LOCATIONS[currentSpace[0].passage][0],LOCATIONS[currentSpace[0].passage][1])
+                        board.move(currentPlayer,moveTo[0],moveTo[1],WIN)
+                        suggest=True
+                if keycheck==pygame.K_TAB:
                     #h to show hand
                     currentPlayer.showHand(WIN)
                     pygame.display.flip()
                     run=wait()
                     board.draw(WIN)
                     pygame.display.flip()
-                if event.key==pygame.K_LEFT:
-                    targetR=currentPlayer.row
-                    targetC=currentPlayer.col-1
-                    target=board.getSpace(targetR,targetC)
-                    if(target!=None and not inRoom and target[1]==0 and (target[0]==0 or target[0].entrance)):
-                        #check if valid movement while outside of room
-                        if(target[0]!=0 and target[0].entrance):
+                if keycheck in [pygame.K_LEFT, pygame.K_RIGHT, pygame.K_UP, pygame.K_DOWN]:
+                    if keycheck==pygame.K_LEFT:
+                        targetR=currentPlayer.row
+                        targetC=currentPlayer.col-1
+                        target=board.getSpace(targetR,targetC)
+                    elif keycheck==pygame.K_RIGHT:
+                        targetR=currentPlayer.row
+                        targetC=currentPlayer.col+1
+                        target=board.getSpace(targetR,targetC)
+                    elif keycheck==pygame.K_UP:
+                        targetR=currentPlayer.row-1
+                        targetC=currentPlayer.col
+                        target=board.getSpace(targetR,targetC)
+                    elif keycheck==pygame.K_DOWN:
+                        targetR=currentPlayer.row+1
+                        targetC=currentPlayer.col
+                        target=board.getSpace(targetR,targetC)
+                    if(checkMoveValid(currentSpace,target)):
+                        #check if valid movement
+                        if(not inRoom and target[0]!=0 and target[0].entrance):
                             #if you enter a room trigger suggest flag
                             suggest=True
+                        if(not inRoom or target[0]==0): #it uses movement to move outside of rooms
+                            dice=dice-1
                         board.move(currentPlayer,targetR,targetC,WIN)
-                        dice=dice-1
-                    elif(target!=None and inRoom and target[0]!=0 and target[1]==0):
-                         #movement in a room does not require dice movement
-                         board.move(currentPlayer,targetR,targetC,WIN)
-                    elif (target!=None and inRoom and target[0]==0 and inEntance and target[1]==0):
-                        #leaving a room
-                        board.move(currentPlayer,targetR,targetC,WIN)
-                        dice=dice-1
-                elif event.key==pygame.K_RIGHT:
-                    targetR=currentPlayer.row
-                    targetC=currentPlayer.col+1
-                    target=board.getSpace(targetR,targetC)
-                    if(target!=None and not inRoom and target[1]==0 and  (target[0]==0 or target[0].entrance)):
-                        if(target[0]!=0 and target[0].entrance):
-                            suggest=True
-                        board.move(currentPlayer,targetR,targetC,WIN)
-                        dice=dice-1
-                    elif(target!=None and inRoom and target[0]!=0 and target[1]==0):
-                         board.move(currentPlayer,targetR,targetC,WIN)
-                    elif (target!=None and inRoom and target[0]==0 and inEntance and target[1]==0):
-                        board.move(currentPlayer,targetR,targetC,WIN)
-                        dice=dice-1
-                elif event.key==pygame.K_UP:
-                    targetR=currentPlayer.row-1
-                    targetC=currentPlayer.col
-                    target=board.getSpace(targetR,targetC)
-                    if(target!=None and not inRoom and target[1]==0 and  (target[0]==0 or target[0].entrance)):
-                        if(target[0]!=0 and target[0].entrance):
-                            suggest=True
-                        board.move(currentPlayer,targetR,targetC,WIN)
-                        dice=dice-1
-                    elif(target!=None and inRoom and target[0]!=0 and target[1]==0):
-                         board.move(currentPlayer,targetR,targetC,WIN)
-                    elif (target!=None and inRoom and target[0]==0 and inEntance and target[1]==0):
-                        board.move(currentPlayer,targetR,targetC,WIN)
-                        dice=dice-1
-                elif event.key==pygame.K_DOWN:
-                    targetR=currentPlayer.row+1
-                    targetC=currentPlayer.col
-                    target=board.getSpace(targetR,targetC)
-                    if(target!=None and not inRoom and target[1]==0 and (target[0]==0 or target[0].entrance)):
-                        if(target[0]!=0 and target[0].entrance):
-                            suggest=True
-                        board.move(currentPlayer,targetR,targetC,WIN)
-                        dice=dice-1
-                    elif(target!=None and inRoom and target[0]!=0 and target[1]==0):
-                         board.move(currentPlayer,targetR,targetC,WIN)
-                    elif (target!=None and inRoom and target[0]==0 and inEntance and target[1]==0):
-                        board.move(currentPlayer,targetR,targetC,WIN)
-                        dice=dice-1
-
+                    if(currentPlayer.ai):#Make agent movement look more human
+                        pygame.time.delay(800)
+                        board.draw(WIN)
+                        pygame.display.flip()
 
                 if(suggest): 
                     #the suggest flag has been triggered
                     pygame.display.set_caption("PLAYER "+str(turn+1)+": "+str(players[turn].id)+" MAKE A SUGGESTION IN CONSOL")
                     board.draw(WIN)
+                    currentPlayer.showHand(WIN)
                     pygame.display.flip()
-                    #prompt suggestion
-                    guess=suggestion(target[0].id,WIN,board)
+                    guess=suggestion(target[0].id)#prompt suggestion
+                    board.draw(WIN)
+                    pygame.display.flip()
+                    
                     guessRoom=guess[0]
                     guessSuspect=guess[1]
                     guessWeapon=guess[2]
-                    #move player to room/unblock door
-                    moveTo=findOpenSpace(board,LOCATIONS[guessRoom][0],LOCATIONS[guessRoom][1])
-                    board.move(currentPlayer,moveTo[0],moveTo[1],WIN)
-                    for p in players:
-                        #check if suggested character is a player and teleport them if they are
-                        if p.id==guessSuspect:
-                            moveTo=findOpenSpace(board,LOCATIONS[guessRoom][0],LOCATIONS[guessRoom][1])
-                            board.move(p,moveTo[0],moveTo[1],WIN)
+                    if target[0].id=="Pool": #Suggestions made in the pool are attempts to win
+                        if guessRoom==roomSolution and guessSuspect==suspectSolution and guessWeapon==weaponSolution:
+                            winmessage=(currentPlayer.id +"WINS!!! "+suspectSolution +" used the "+ weaponSolution+" in the "+roomSolution)
+                            WIN.blit(FONT.render(winmessage,True,WHITE), (LOCATIONS['Pool'][1]*SQUARE_SIZE, LOCATIONS['Pool'][0]*SQUARE_SIZE, SQUARE_SIZE,SQUARE_SIZE))
+                            board.draw(WIN)
+                            pygame.display.flip()
+                            run=False
+                            wait()
+                        else: #remove failed players
+                            currentPlayer.dead=True    
+                    else:
+                        #move player to room/unblock door
+                        moveTo=findOpenSpace(board,LOCATIONS[guessRoom][0],LOCATIONS[guessRoom][1])
+                        board.move(currentPlayer,moveTo[0],moveTo[1],WIN)
+                        board.draw(WIN)
+                        pygame.display.flip()
+                        for p in players:
+                            #check if suggested character is a player and teleport them if they are
+                            if p.id==guessSuspect:
+                                moveTo=findOpenSpace(board,LOCATIONS[guessRoom][0],LOCATIONS[guessRoom][1])
+                                board.move(p,moveTo[0],moveTo[1],WIN)
+                        i=players.index(currentPlayer)
+                        if(i==numplayers-1):
+                            nextI=0
+                        else:
+                            nextI=i+1
+                        refuteCard=None
+                        while nextI!=i:
+                            nextplayer=players[nextI]
+                            board.draw(WIN)
+                            pygame.display.flip()
+                            pygame.display.set_caption(nextplayer.id + " must refute: " + str(guess) +" press enter then use consol")
+                            board.draw(WIN)
+                            pygame.display.flip()
+                            run=wait()
+                            if(nextplayer.ai):
+                                for card in nextplayer.hand:
+                                    if card.id in guess:
+                                        refuteCard=card.id
+                                        break
+                            else:
+                                board.draw(WIN)
+                                nextplayer.showHand(WIN)
+                                pygame.display.flip()
+                                refuteCard=refute(guess,nextplayer)
+                                if not refuteCard==None:
+                                    break
+                            if(nextI==numplayers-1):
+                                nextI=0
+                            else:
+                                nextI=nextI+1
+                        board.draw(WIN)
+                        pygame.display.flip()
+                        if refuteCard==None:
+                            pygame.display.set_caption("no one could prove you wrong....")
+                            run=wait()
+                        else:
+                            pygame.display.set_caption(nextplayer.id + " showed you " +refuteCard)
+                            run=wait()
+
                     dice=0#suggesting ends movement
                     suggest=False
 

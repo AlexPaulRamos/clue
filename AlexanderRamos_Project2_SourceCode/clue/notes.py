@@ -13,3 +13,5 @@ class Notes:
         self.weaponsNotes={"Candlestick":[0]*numPlayers,"Dagger":[0]*numPlayers,"Lead Pipe":[0]*numPlayers,"Revolver":[0]*numPlayers,"Rope":[0]*numPlayers,"Wrench":[0]*numPlayers}
         self.roomsNotes={"Hall":[0]*numPlayers,"Lounge":[0]*numPlayers,"Dining Room":[0]*numPlayers,"Kitchen":[0]*numPlayers,"Ballroom":[0]*numPlayers,"Conservatory":[0]*numPlayers,"Billiard Room":[0]*numPlayers,"Library":[0]*numPlayers,"Study":[0]*numPlayers}
 
+    def __str__(self): 
+        return(str(self.suspectsNotes)+'\n'+str(self.weaponsNotes)+'\n'+str(self.roomsNotes))
