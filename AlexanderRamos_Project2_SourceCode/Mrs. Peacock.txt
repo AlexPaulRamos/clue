@@ -1,0 +1,17 @@
+starting hand 
+Suspect: Reverend Green
+Room: Kitchen
+Suspect: Mrs. Peacock
+Room: Lounge
+Weapon: Dagger
+Weapon: Candlestick
+{'Hall': [0, 0], 'Lounge': [0, 1], 'Dining Room': [0, 0], 'Kitchen': [0, 1], 'Ballroom': [0, 0], 'Conservatory': [0, 0], 'Billiard Room': [0, 0], 'Library': [0, 0], 'Study': [0, 0]}
+{'Hall': {'Mrs. Peacock', 'Reverend Green', 'Professor Plum'}, 'Lounge': {'Mine'}, 'Dining Room': {'Mrs. Peacock', 'Reverend Green', 'Professor Plum'}, 'Kitchen': {'Mine'}, 'Ballroom': {'Mrs. Peacock', 'Reverend Green', 'Professor Plum'}, 'Conservatory': {'Mrs. Peacock', 'Reverend Green', 'Professor Plum'}, 'Billiard Room': {'Mrs. Peacock', 'Reverend Green', 'Professor Plum'}, 'Library': {'Mrs. Peacock', 'Reverend Green', 'Professor Plum'}, 'Study': {'Mrs. Peacock', 'Reverend Green', 'Professor Plum'}}
+{'Miss Scarlett': [0, 0], 'Colonel Mustard': [0, 0], 'Mrs. White': [0, 0], 'Reverend Green': [0, 1], 'Mrs. Peacock': [0, 1], 'Professor Plum': [0, 0]}
+{'Miss Scarlett': {'Mrs. Peacock', 'Reverend Green', 'Professor Plum'}, 'Colonel Mustard': {'Mrs. Peacock', 'Reverend Green', 'Professor Plum'}, 'Mrs. White': {'Mrs. Peacock', 'Reverend Green', 'Professor Plum'}, 'Reverend Green': {'Mine'}, 'Mrs. Peacock': {'Mine'}, 'Professor Plum': {'Mrs. Peacock', 'Reverend Green', 'Professor Plum'}}
+{'Candlestick': [0, 1], 'Dagger': [0, 1], 'Lead Pipe': [0, 0], 'Revolver': [0, 0], 'Rope': [0, 0], 'Wrench': [0, 0]}
+{'Candlestick': {'Mine'}, 'Dagger': {'Mine'}, 'Lead Pipe': {'Mrs. Peacock', 'Reverend Green', 'Professor Plum'}, 'Revolver': {'Mrs. Peacock', 'Reverend Green', 'Professor Plum'}, 'Rope': {'Mrs. Peacock', 'Reverend Green', 'Professor Plum'}, 'Wrench': {'Mrs. Peacock', 'Reverend Green', 'Professor Plum'}}
+[None, None, None]
+********************
+Targeting: (4, 21) to (6, 20)
+********

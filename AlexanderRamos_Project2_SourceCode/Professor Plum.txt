@@ -1,0 +1,68 @@
+starting hand 
+Room: Ballroom
+Room: Conservatory
+Room: Kitchen
+Weapon: Revolver
+Suspect: Mrs. Peacock
+Weapon: Candlestick
+{'Hall': [0, 0], 'Lounge': [0, 0], 'Dining Room': [0, 0], 'Kitchen': [0, 1], 'Ballroom': [0, 1], 'Conservatory': [0, 1], 'Billiard Room': [0, 0], 'Library': [0, 0], 'Study': [0, 0]}
+{'Hall': {'Colonel Mustard', 'Reverend Green', 'Professor Plum'}, 'Lounge': {'Colonel Mustard', 'Reverend Green', 'Professor Plum'}, 'Dining Room': {'Colonel Mustard', 'Reverend Green', 'Professor Plum'}, 'Kitchen': {'Mine'}, 'Ballroom': {'Mine'}, 'Conservatory': {'Mine'}, 'Billiard Room': {'Colonel Mustard', 'Reverend Green', 'Professor Plum'}, 'Library': {'Colonel Mustard', 'Reverend Green', 'Professor Plum'}, 'Study': {'Colonel Mustard', 'Reverend Green', 'Professor Plum'}}
+{'Miss Scarlett': [0, 0], 'Colonel Mustard': [0, 0], 'Mrs. White': [0, 0], 'Reverend Green': [0, 0], 'Mrs. Peacock': [0, 1], 'Professor Plum': [0, 0]}
+{'Miss Scarlett': {'Colonel Mustard', 'Reverend Green', 'Professor Plum'}, 'Colonel Mustard': {'Colonel Mustard', 'Reverend Green', 'Professor Plum'}, 'Mrs. White': {'Colonel Mustard', 'Reverend Green', 'Professor Plum'}, 'Reverend Green': {'Colonel Mustard', 'Reverend Green', 'Professor Plum'}, 'Mrs. Peacock': {'Mine'}, 'Professor Plum': {'Colonel Mustard', 'Reverend Green', 'Professor Plum'}}
+{'Candlestick': [0, 1], 'Dagger': [0, 0], 'Lead Pipe': [0, 0], 'Revolver': [0, 1], 'Rope': [0, 0], 'Wrench': [0, 0]}
+{'Candlestick': {'Mine'}, 'Dagger': {'Colonel Mustard', 'Reverend Green', 'Professor Plum'}, 'Lead Pipe': {'Colonel Mustard', 'Reverend Green', 'Professor Plum'}, 'Revolver': {'Mine'}, 'Rope': {'Colonel Mustard', 'Reverend Green', 'Professor Plum'}, 'Wrench': {'Colonel Mustard', 'Reverend Green', 'Professor Plum'}}
+[None, None, None]
+********************
+Targeting: (18, 21) to (19, 17)
+********
+Targeting: (18, 19) to (19, 17)
+********
+I want to Know: ['Hall', 'Miss Scarlett', 'Dagger']
+********
+Learned Reverend Green does not have Study
+{'Hall': [0, 0], 'Lounge': [0, 0], 'Dining Room': [0, 0], 'Kitchen': [0, 1], 'Ballroom': [0, 1], 'Conservatory': [0, 1], 'Billiard Room': [0, 0], 'Library': [0, 0], 'Study': [0, 0]}
+{'Hall': {'Colonel Mustard', 'Professor Plum'}, 'Lounge': {'Colonel Mustard', 'Professor Plum'}, 'Dining Room': {'Colonel Mustard', 'Professor Plum'}, 'Kitchen': {'Mine'}, 'Ballroom': {'Mine'}, 'Conservatory': {'Mine'}, 'Billiard Room': {'Colonel Mustard', 'Professor Plum'}, 'Library': {'Colonel Mustard', 'Professor Plum'}, 'Study': {'Colonel Mustard', 'Professor Plum'}}
+{'Miss Scarlett': [0, 0], 'Colonel Mustard': [0, 0], 'Mrs. White': [0, 0], 'Reverend Green': [0, 0], 'Mrs. Peacock': [0, 1], 'Professor Plum': [0, 0]}
+{'Miss Scarlett': {'Colonel Mustard', 'Professor Plum'}, 'Colonel Mustard': {'Colonel Mustard', 'Professor Plum'}, 'Mrs. White': {'Colonel Mustard', 'Professor Plum'}, 'Reverend Green': {'Colonel Mustard', 'Professor Plum'}, 'Mrs. Peacock': {'Mine'}, 'Professor Plum': {'Colonel Mustard', 'Professor Plum'}}
+{'Candlestick': [0, 1], 'Dagger': [0, 0], 'Lead Pipe': [0, 0], 'Revolver': [0, 1], 'Rope': [0, 0], 'Wrench': [0, 0]}
+{'Candlestick': {'Mine'}, 'Dagger': {'Colonel Mustard', 'Professor Plum'}, 'Lead Pipe': {'Colonel Mustard', 'Professor Plum'}, 'Revolver': {'Mine'}, 'Rope': {'Colonel Mustard', 'Professor Plum'}, 'Wrench': {'Colonel Mustard', 'Professor Plum'}}
+[None, None, None]
+********************
+Learned Reverend Green does not have Miss Scarlett
+{'Hall': [0, 0], 'Lounge': [0, 0], 'Dining Room': [0, 0], 'Kitchen': [0, 1], 'Ballroom': [0, 1], 'Conservatory': [0, 1], 'Billiard Room': [0, 0], 'Library': [0, 0], 'Study': [0, 0]}
+{'Hall': {'Colonel Mustard', 'Professor Plum'}, 'Lounge': {'Colonel Mustard', 'Professor Plum'}, 'Dining Room': {'Colonel Mustard', 'Professor Plum'}, 'Kitchen': {'Mine'}, 'Ballroom': {'Mine'}, 'Conservatory': {'Mine'}, 'Billiard Room': {'Colonel Mustard', 'Professor Plum'}, 'Library': {'Colonel Mustard', 'Professor Plum'}, 'Study': {'Colonel Mustard', 'Professor Plum'}}
+{'Miss Scarlett': [0, 0], 'Colonel Mustard': [0, 0], 'Mrs. White': [0, 0], 'Reverend Green': [0, 0], 'Mrs. Peacock': [0, 1], 'Professor Plum': [0, 0]}
+{'Miss Scarlett': {'Colonel Mustard', 'Professor Plum'}, 'Colonel Mustard': {'Colonel Mustard', 'Professor Plum'}, 'Mrs. White': {'Colonel Mustard', 'Professor Plum'}, 'Reverend Green': {'Colonel Mustard', 'Professor Plum'}, 'Mrs. Peacock': {'Mine'}, 'Professor Plum': {'Colonel Mustard', 'Professor Plum'}}
+{'Candlestick': [0, 1], 'Dagger': [0, 0], 'Lead Pipe': [0, 0], 'Revolver': [0, 1], 'Rope': [0, 0], 'Wrench': [0, 0]}
+{'Candlestick': {'Mine'}, 'Dagger': {'Colonel Mustard', 'Professor Plum'}, 'Lead Pipe': {'Colonel Mustard', 'Professor Plum'}, 'Revolver': {'Mine'}, 'Rope': {'Colonel Mustard', 'Professor Plum'}, 'Wrench': {'Colonel Mustard', 'Professor Plum'}}
+[None, None, None]
+********************
+Learned Reverend Green does not have Dagger
+{'Hall': [0, 0], 'Lounge': [0, 0], 'Dining Room': [0, 0], 'Kitchen': [0, 1], 'Ballroom': [0, 1], 'Conservatory': [0, 1], 'Billiard Room': [0, 0], 'Library': [0, 0], 'Study': [0, 0]}
+{'Hall': {'Colonel Mustard', 'Professor Plum'}, 'Lounge': {'Colonel Mustard', 'Professor Plum'}, 'Dining Room': {'Colonel Mustard', 'Professor Plum'}, 'Kitchen': {'Mine'}, 'Ballroom': {'Mine'}, 'Conservatory': {'Mine'}, 'Billiard Room': {'Colonel Mustard', 'Professor Plum'}, 'Library': {'Colonel Mustard', 'Professor Plum'}, 'Study': {'Colonel Mustard', 'Professor Plum'}}
+{'Miss Scarlett': [0, 0], 'Colonel Mustard': [0, 0], 'Mrs. White': [0, 0], 'Reverend Green': [0, 0], 'Mrs. Peacock': [0, 1], 'Professor Plum': [0, 0]}
+{'Miss Scarlett': {'Colonel Mustard', 'Professor Plum'}, 'Colonel Mustard': {'Colonel Mustard', 'Professor Plum'}, 'Mrs. White': {'Colonel Mustard', 'Professor Plum'}, 'Reverend Green': {'Colonel Mustard', 'Professor Plum'}, 'Mrs. Peacock': {'Mine'}, 'Professor Plum': {'Colonel Mustard', 'Professor Plum'}}
+{'Candlestick': [0, 1], 'Dagger': [0, 0], 'Lead Pipe': [0, 0], 'Revolver': [0, 1], 'Rope': [0, 0], 'Wrench': [0, 0]}
+{'Candlestick': {'Mine'}, 'Dagger': {'Colonel Mustard', 'Professor Plum'}, 'Lead Pipe': {'Colonel Mustard', 'Professor Plum'}, 'Revolver': {'Mine'}, 'Rope': {'Colonel Mustard', 'Professor Plum'}, 'Wrench': {'Colonel Mustard', 'Professor Plum'}}
+[None, None, None]
+********************
+Learned Miss Scarlett is 1
+{'Hall': [0, 0], 'Lounge': [0, 0], 'Dining Room': [0, 0], 'Kitchen': [0, 1], 'Ballroom': [0, 1], 'Conservatory': [0, 1], 'Billiard Room': [0, 0], 'Library': [0, 0], 'Study': [0, 0]}
+{'Hall': {'Colonel Mustard', 'Professor Plum'}, 'Lounge': {'Colonel Mustard', 'Professor Plum'}, 'Dining Room': {'Colonel Mustard', 'Professor Plum'}, 'Kitchen': {'Mine'}, 'Ballroom': {'Mine'}, 'Conservatory': {'Mine'}, 'Billiard Room': {'Colonel Mustard', 'Professor Plum'}, 'Library': {'Colonel Mustard', 'Professor Plum'}, 'Study': {'Colonel Mustard', 'Professor Plum'}}
+{'Miss Scarlett': [1, 0], 'Colonel Mustard': [0, 0], 'Mrs. White': [0, 0], 'Reverend Green': [0, 0], 'Mrs. Peacock': [0, 1], 'Professor Plum': [0, 0]}
+{'Miss Scarlett': {'Colonel Mustard', 'Professor Plum'}, 'Colonel Mustard': {'Colonel Mustard', 'Professor Plum'}, 'Mrs. White': {'Colonel Mustard', 'Professor Plum'}, 'Reverend Green': {'Colonel Mustard', 'Professor Plum'}, 'Mrs. Peacock': {'Mine'}, 'Professor Plum': {'Colonel Mustard', 'Professor Plum'}}
+{'Candlestick': [0, 1], 'Dagger': [0, 0], 'Lead Pipe': [0, 0], 'Revolver': [0, 1], 'Rope': [0, 0], 'Wrench': [0, 0]}
+{'Candlestick': {'Mine'}, 'Dagger': {'Colonel Mustard', 'Professor Plum'}, 'Lead Pipe': {'Colonel Mustard', 'Professor Plum'}, 'Revolver': {'Mine'}, 'Rope': {'Colonel Mustard', 'Professor Plum'}, 'Wrench': {'Colonel Mustard', 'Professor Plum'}}
+[None, None, None]
+********************
+Learned Miss Scarlett is 1
+{'Hall': [0, 0], 'Lounge': [0, 0], 'Dining Room': [0, 0], 'Kitchen': [0, 1], 'Ballroom': [0, 1], 'Conservatory': [0, 1], 'Billiard Room': [0, 0], 'Library': [0, 0], 'Study': [0, 0]}
+{'Hall': {'Colonel Mustard', 'Professor Plum'}, 'Lounge': {'Colonel Mustard', 'Professor Plum'}, 'Dining Room': {'Colonel Mustard', 'Professor Plum'}, 'Kitchen': {'Mine'}, 'Ballroom': {'Mine'}, 'Conservatory': {'Mine'}, 'Billiard Room': {'Colonel Mustard', 'Professor Plum'}, 'Library': {'Colonel Mustard', 'Professor Plum'}, 'Study': {'Colonel Mustard', 'Professor Plum'}}
+{'Miss Scarlett': [1, 0], 'Colonel Mustard': [0, 0], 'Mrs. White': [0, 0], 'Reverend Green': [0, 0], 'Mrs. Peacock': [0, 1], 'Professor Plum': [0, 0]}
+{'Miss Scarlett': {'Colonel Mustard', 'Professor Plum'}, 'Colonel Mustard': {'Colonel Mustard', 'Professor Plum'}, 'Mrs. White': {'Colonel Mustard', 'Professor Plum'}, 'Reverend Green': {'Colonel Mustard', 'Professor Plum'}, 'Mrs. Peacock': {'Mine'}, 'Professor Plum': {'Colonel Mustard', 'Professor Plum'}}
+{'Candlestick': [0, 1], 'Dagger': [0, 0], 'Lead Pipe': [0, 0], 'Revolver': [0, 1], 'Rope': [0, 0], 'Wrench': [0, 0]}
+{'Candlestick': {'Mine'}, 'Dagger': {'Colonel Mustard', 'Professor Plum'}, 'Lead Pipe': {'Colonel Mustard', 'Professor Plum'}, 'Revolver': {'Mine'}, 'Rope': {'Colonel Mustard', 'Professor Plum'}, 'Wrench': {'Colonel Mustard', 'Professor Plum'}}
+[None, None, None]
+********************
+Targeting: (2, 2) to (10, 7)
+********

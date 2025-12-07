@@ -8,3 +8,8 @@ class Card:
     
     def draw(self, win, row, col):
         win.blit(FONT.render(str(self),True,BLACK, CARD), (row*SQUARE_SIZE, col*SQUARE_SIZE, SQUARE_SIZE*3,SQUARE_SIZE*3))
+
+    def __eq__(self, value):
+        if type(value)==str:
+            return value==self.id
+        return False
